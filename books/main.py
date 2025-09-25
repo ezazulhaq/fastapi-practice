@@ -11,6 +11,6 @@ BOOKS = [
     {'title': 'Title Six', 'author': 'Author Two', 'category': 'math'}
 ]
 
-@app.get("/books")
+@app.get("/")
 def get_books():
     return BOOKS

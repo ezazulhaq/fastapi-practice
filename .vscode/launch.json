@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "books.main:app",
+                "project1.main:app",
                 "--reload"
             ],
             "jinja": true

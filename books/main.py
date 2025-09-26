@@ -13,4 +13,28 @@ BOOKS = [
 
 @app.get("/")
 def get_books():
+    """
+        Get all the books
+    """
     return BOOKS
+
+@app.get("/books/{title}")
+def get_book_by_title(title: str):
+    """
+        Get Books by Title
+    """
+    for book in BOOKS:
+        if book.get('title').casefold() == title.casefold():
+            return book
+
+@app.get("/books/{author}/") 
+def get_books_by_author_and_category(author: str, category: str):
+    """
+        Get Books by Author and Category
+    """
+    books = []
+    for book in BOOKS:
+        if book.get('author').casefold() == author.casefold() and \
+            book.get('category').casefold() == category.casefold():
+            books.append(book)
+    return books

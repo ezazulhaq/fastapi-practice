@@ -45,6 +45,7 @@ def add_books(new_book=Body()):
         Add New Book
     """
     BOOKS.append(new_book)
+    return { "message": "Book Added Successfully" }
 
 @app.put("/books/update")
 def update_book(body=Body()):

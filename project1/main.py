@@ -45,3 +45,13 @@ def add_books(new_book=Body()):
         Add New Book
     """
     BOOKS.append(new_book)
+
+@app.put("/books/update")
+def update_book(body=Body()):
+    """
+        Update Book
+    """
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get("title").casefold() == body.get("title").casefold():
+            BOOKS[i] = body
+            return BOOKS[i]

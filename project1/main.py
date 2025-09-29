@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import Body, FastAPI
 
 app = FastAPI()
 
@@ -38,3 +38,10 @@ def get_books_by_author_and_category(author: str, category: str):
             book.get('category').casefold() == category.casefold():
             books.append(book)
     return books
+
+@app.post("/books/add")
+def add_books(new_book=Body()):
+    """
+        Add New Book
+    """
+    BOOKS.append(new_book)

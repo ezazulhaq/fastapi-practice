@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from project2.dto.book_request import BookRequest
 from project2.model.book import Book
 
 app = FastAPI()
@@ -19,3 +20,12 @@ def get_book():
         Get All Books
     """
     return BOOKS
+
+@app.post("/book")
+def add_book(book:BookRequest):
+    """
+        Add New Book
+    """
+    new_book = Book(**book.model_dump())
+    BOOKS.append(new_book)
+    return { "message": "Book Added Successfully"}

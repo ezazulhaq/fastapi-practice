@@ -12,3 +12,10 @@ BOOKS = [
     Book(5, "Title five", "Author three", "Description five", 3),
     Book(6, "Title six", "Author six", "Description six", 4),
 ]
+
+@app.get("/books")
+def get_book():
+    """
+        Get All Books
+    """
+    return BOOKS

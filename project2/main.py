@@ -53,3 +53,15 @@ def add_book(book:BookRequest):
     new_book = Book(**book.model_dump())
     BOOKS.append(book_service.fetch_id(new_book, BOOKS))
     return { "message": "Book Added Successfully"}
+
+@app.put("/book/{book_id}")
+def update_book_by_id(book_id: int, book: BookRequest):
+    """
+        Update Book By ID
+    """
+    for index, b in enumerate(BOOKS):
+        if b.id == book_id:
+            BOOKS[index] = Book(**book.model_dump())
+            BOOKS[index].id = book_id
+            return { "message": "Book Updated Successfully"}
+    return { "message": "Book Not Found"}

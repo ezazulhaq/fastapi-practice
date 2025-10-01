@@ -65,3 +65,14 @@ def update_book_by_id(book_id: int, book: BookRequest):
             BOOKS[index].id = book_id
             return { "message": "Book Updated Successfully"}
     return { "message": "Book Not Found"}
+
+@app.delete("/book/{book_id}")
+def delete_book(book_id: int):
+    """
+        Delete Book By ID
+    """
+    for index, b in enumerate(BOOKS):
+        if b.id == book_id:
+            BOOKS.pop(index)
+            return { "message": "Book Deleted Successfully"}
+    return { "message": "Book Not Found"}

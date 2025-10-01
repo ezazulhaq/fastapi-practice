@@ -22,6 +22,16 @@ def get_book():
     """
     return BOOKS
 
+@app.get("/books/{book_id}")
+def get_book_by_id(book_id: int):
+    """
+        Get Book By ID
+    """
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
+    return None
+
 @app.post("/book")
 def add_book(book:BookRequest):
     """

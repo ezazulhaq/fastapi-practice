@@ -32,6 +32,18 @@ def get_book_by_id(book_id: int):
             return book
     return None
 
+@app.get("/books/")
+def get_books_by_rating(rating: int):
+    """
+        Get Books By Rating
+    """
+    books: list[Book] = []
+    for book in BOOKS:
+        if book.rating == rating:
+            books.append(book)
+    
+    return books
+
 @app.post("/book")
 def add_book(book:BookRequest):
     """

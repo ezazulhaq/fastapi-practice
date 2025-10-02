@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Path, Query
 
 from project2.dto.book_request import BookRequest
 from project2.model.book import Book
@@ -24,7 +24,7 @@ def get_book():
     return BOOKS
 
 @app.get("/books/{book_id}")
-def get_book_by_id(book_id: int):
+def get_book_by_id(book_id: Annotated[int, Path(gt=0)]):
     """
         Get Book By ID
     """
@@ -68,7 +68,7 @@ def add_book(book:BookRequest):
     return { "message": "Book Added Successfully"}
 
 @app.put("/book/{book_id}")
-def update_book_by_id(book_id: int, book: BookRequest):
+def update_book_by_id(book_id: Annotated[int, Path(gt=0)], book: BookRequest):
     """
         Update Book By ID
     """
@@ -80,7 +80,7 @@ def update_book_by_id(book_id: int, book: BookRequest):
     return { "message": "Book Not Found"}
 
 @app.delete("/book/{book_id}")
-def delete_book(book_id: int):
+def delete_book(book_id: Annotated[int, Path(gt=0)]):
     """
         Delete Book By ID
     """

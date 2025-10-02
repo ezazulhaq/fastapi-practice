@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Query
 
 from project2.dto.book_request import BookRequest
 from project2.model.book import Book
@@ -33,7 +34,7 @@ def get_book_by_id(book_id: int):
     return None
 
 @app.get("/books/")
-def get_books_by_rating(rating: int):
+def get_books_by_rating(rating: Annotated[int, Query(gt=1, le=5)]):
     """
         Get Books By Rating
     """
@@ -45,7 +46,7 @@ def get_books_by_rating(rating: int):
     return books
 
 @app.get("/books/publish/")
-def get_book_by_date(date: int):
+def get_book_by_date(date: Annotated[int, Query(gt=1900, le=2024)]):
     """
         Get Book By Published Date
     """

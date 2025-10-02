@@ -7,12 +7,12 @@ from project2.service.book_service import BookService
 app = FastAPI()
 
 BOOKS = [
-    Book(1, "Title one", "Author one", "Description one", 5),
-    Book(2, "Title two", "Author two", "Description two", 2),
-    Book(3, "Title three", "Author three", "Description three", 1),
-    Book(4, "Title four", "Author one", "Description four", 4),
-    Book(5, "Title five", "Author three", "Description five", 3),
-    Book(6, "Title six", "Author six", "Description six", 4),
+    Book(1, "Title one", "Author one", "Description one", 5, 2010),
+    Book(2, "Title two", "Author two", "Description two", 2, 1994),
+    Book(3, "Title three", "Author three", "Description three", 1, 2018),
+    Book(4, "Title four", "Author one", "Description four", 4, 2024),
+    Book(5, "Title five", "Author three", "Description five", 3, 1983),
+    Book(6, "Title six", "Author six", "Description six", 4, 2011),
 ]
 
 @app.get("/books")
@@ -42,6 +42,18 @@ def get_books_by_rating(rating: int):
         if book.rating == rating:
             books.append(book)
     
+    return books
+
+@app.get("/books/publish/")
+def get_book_by_date(date: int):
+    """
+        Get Book By Published Date
+    """
+    books: list[Book] = []
+    for book in BOOKS:
+        if book.published_date >= date:
+            books.append(book)
+
     return books
 
 @app.post("/book")

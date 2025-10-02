@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: FastAPI Books",
+            "name": "Python Debugger: FastAPI Books Porject1",
             "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
             "args": [
                 "project1.main:app",
+                "--reload"
+            ],
+            "jinja": true
+        },
+        {
+            "name": "Python Debugger: FastAPI Books Porject2",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "project2.main:app",
                 "--reload"
             ],
             "jinja": true

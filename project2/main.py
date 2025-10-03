@@ -1,9 +1,11 @@
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import FastAPI, Path, Query
 
 from project2.dto.book_request import BookRequest
 from project2.model.book import Book
 from project2.service.book_service import BookService
+from fastapi import HTTPException
+from starlette import status
 
 app = FastAPI()
 
@@ -16,14 +18,14 @@ BOOKS = [
     Book(6, "Title six", "Author six", "Description six", 4, 2011),
 ]
 
-@app.get("/books")
+@app.get("/books", status_code=status.HTTP_200_OK)
 def get_book():
     """
         Get All Books
     """
     return BOOKS
 
-@app.get("/books/{book_id}")
+@app.get("/books/{book_id}", status_code=status.HTTP_200_OK)
 def get_book_by_id(book_id: Annotated[int, Path(gt=0)]):
     """
         Get Book By ID
@@ -31,9 +33,9 @@ def get_book_by_id(book_id: Annotated[int, Path(gt=0)]):
     for book in BOOKS:
         if book.id == book_id:
             return book
-    return None
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book Not Found")
 
-@app.get("/books/")
+@app.get("/books/", status_code=status.HTTP_200_OK)
 def get_books_by_rating(rating: Annotated[int, Query(gt=1, le=5)]):
     """
         Get Books By Rating
@@ -45,7 +47,7 @@ def get_books_by_rating(rating: Annotated[int, Query(gt=1, le=5)]):
     
     return books
 
-@app.get("/books/publish/")
+@app.get("/books/publish/", status_code=status.HTTP_200_OK)
 def get_book_by_date(date: Annotated[int, Query(gt=1900, le=2024)]):
     """
         Get Book By Published Date
@@ -57,7 +59,7 @@ def get_book_by_date(date: Annotated[int, Query(gt=1900, le=2024)]):
 
     return books
 
-@app.post("/book")
+@app.post("/book", status_code=status.HTTP_201_CREATED)
 def add_book(book:BookRequest):
     """
         Add New Book
@@ -65,9 +67,10 @@ def add_book(book:BookRequest):
     book_service = BookService()
     new_book = Book(**book.model_dump())
     BOOKS.append(book_service.fetch_id(new_book, BOOKS))
-    return { "message": "Book Added Successfully"}
+    
+    raise HTTPException(status_code=status.HTTP_201_CREATED, detail="Book Added Successfully")
 
-@app.put("/book/{book_id}")
+@app.put("/book/{book_id}", status_code=status.HTTP_200_OK)
 def update_book_by_id(book_id: Annotated[int, Path(gt=0)], book: BookRequest):
     """
         Update Book By ID
@@ -76,10 +79,10 @@ def update_book_by_id(book_id: Annotated[int, Path(gt=0)], book: BookRequest):
         if b.id == book_id:
             BOOKS[index] = Book(**book.model_dump())
             BOOKS[index].id = book_id
-            return { "message": "Book Updated Successfully"}
-    return { "message": "Book Not Found"}
+            raise HTTPException(status_code=status.HTTP_200_OK, detail="Book Updated Successfully")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book Not Found")
 
-@app.delete("/book/{book_id}")
+@app.delete("/book/{book_id}", status_code=status.HTTP_200_OK)
 def delete_book(book_id: Annotated[int, Path(gt=0)]):
     """
         Delete Book By ID
@@ -87,5 +90,5 @@ def delete_book(book_id: Annotated[int, Path(gt=0)]):
     for index, b in enumerate(BOOKS):
         if b.id == book_id:
             BOOKS.pop(index)
-            return { "message": "Book Deleted Successfully"}
-    return { "message": "Book Not Found"}
+            raise HTTPException(status_code=status.HTTP_200_OK, detail="Book Deleted Successfully")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book Not Found")

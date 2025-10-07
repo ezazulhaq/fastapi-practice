@@ -25,6 +25,17 @@
                 "--reload"
             ],
             "jinja": true
+        },
+        {
+            "name": "Python Debugger: Todo Project",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "project3.main:app",
+                "--reload"
+            ],
+            "jinja": true
         }
     ]
 }

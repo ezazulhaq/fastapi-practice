@@ -18,6 +18,6 @@ dependencies = [
     "pytest-asyncio>=1.2.0",
     "python-jose>=3.5.0",
     "python-multipart>=0.0.20",
-    "sqlalchemy>=2.0.43",
+    "sqlmodel>=0.0.25",
     "uvicorn>=0.37.0",
 ]

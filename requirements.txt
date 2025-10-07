@@ -5,7 +5,7 @@ psycopg2-binary
 PyMySQL
 python-jose
 python-multipart
-SQLAlchemy
+sqlmodel
 uvicorn
 passlib
 pytest

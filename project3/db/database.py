@@ -6,7 +6,7 @@ engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 def get_session():
     try:
-        with Session(engine) as session:
+        with Session(engine, autocommit = False, autoflush = False) as session:
             yield session
     finally:
         session.close()

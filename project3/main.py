@@ -8,3 +8,7 @@ from project3.db.database import get_session
 app = FastAPI()
 
 SessionDep = Annotated[Session, Depends(get_session)]
+
+@app.get("/")
+def read_root(session: SessionDep):
+    return {"Hello": "World"}
